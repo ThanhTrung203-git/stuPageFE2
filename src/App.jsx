@@ -24,7 +24,7 @@ import KCngheTpham from "./pages/khoa/KCngheTpham";
 import KDienDtu from "./pages/khoa/KDienDtu";
 import KCoKhi from "./pages/khoa/KCoKhi";
 import KQtriKdoanh from "./pages/khoa/KQtriKdoanh";
-import LienHe from "./pages/Lienhe";
+import LienHe from "./pages/LienHe";
 import DoanThanhNien from "./pages/sinhvien/DoanThanhNien";
 import BieuMau from "./pages/sinhvien/BieuMau";
 import HuongDan from "./pages/sinhvien/HuongDan";
