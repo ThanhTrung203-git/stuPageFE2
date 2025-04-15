@@ -100,7 +100,7 @@ const ContentPage = () => {
           {/* Tuyển Sinh */}
           <div className="content-column">
             <div className="content-title">
-              <img src="../../src/assets/icon-mortarboard.png" alt="icon" />
+              <img src="../../assets/icon-mortarboard.png" alt="icon" />
               <span className="red">Tuyển Sinh STU</span>
             </div>
             {tuyensinh.length > 0 ? (
@@ -127,7 +127,7 @@ const ContentPage = () => {
           {/* Hướng Nghiệp */ }
           <div className="content-column">
             <div className="content-title">
-              <img src="../../src/assets/icon-career.png" alt="icon" />
+              <img src="../../assets/icon-career.png" alt="icon" />
               <span className="red">Hướng Nghiệp</span>
             </div>
             {huongnghiep.length > 0 ? (
@@ -152,8 +152,8 @@ const ContentPage = () => {
           </div>
         </div>
         <div className="content-columns">
-          {renderCategory("Sinh Viên STU", "../../src/assets/sinhvien.png", sinhvien)}
-          {renderCategory("Học - Thi - Tuyển Sinh", "../../src/assets/hoc-thi-tuyensinh.png", hocthi)}
+          {renderCategory("Sinh Viên STU", "../../assets/sinhvien.png", sinhvien)}
+          {renderCategory("Học - Thi - Tuyển Sinh", "../../assets/hoc-thi-tuyensinh.png", hocthi)}
         </div>
       </div>
     </>
