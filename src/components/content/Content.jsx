@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SeeAllButton from "../UI/SeeAllButton";
 import NewsItem from "./newsItem";
+import logo1 from "../../assets/news.png";
 
 const ContentPage = () => {
   const [news, setNews] = useState([]);
@@ -76,7 +77,7 @@ const ContentPage = () => {
       {/* Tin tức chính */}
       <div className="news-container">
         <div className="news-header">
-          <img src="../../src/assets/news.png" alt="news-icon" className="news-icon" />
+          <img src={logo1} alt="news-icon" className="news-icon" />
           <span className="news-title read-more">Tin Tức STU</span>
         </div>
         {news.length === 0 ? (
