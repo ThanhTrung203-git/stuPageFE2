@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./EventSchedule.css";
 import SeeAllButton from "../UI/SeeAllButton";
+import logo12 from "../../assets/schedule_icon.png"
 
 const EventSchedule = () => {
   const [events, setEvents] = useState([]);
@@ -38,7 +39,7 @@ const EventSchedule = () => {
       <div className="event-header">
         <div className="icon-box">
           <img
-            src="../../src/assets/schedule_icon.png"
+            src={logo12}
             alt="news-icon"
             className="news-icon"
           />

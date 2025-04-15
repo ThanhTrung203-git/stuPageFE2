@@ -1,6 +1,8 @@
 import React from "react";
 import "./contentRight.css";
 import EventSchedule from "./EventSchedule";
+import logo23 from "../../assets/icon3.png"
+import logo34 from "../../assets/icon10.png"
 
 const ContentRightPage = () => {
     const links = [
@@ -18,7 +20,7 @@ const ContentRightPage = () => {
         <div className="right-container">
             <div className="section">
                 <div className="section-header">
-                    <img src="../../assets/icon3.png" alt="icon" className="icon" />
+                    <img src={logo23} alt="icon" className="icon" />
                     <span>Liên Kết Thường Dùng</span>
                 </div>
                 <ul className="link-list">
@@ -32,7 +34,7 @@ const ContentRightPage = () => {
 
             <div className="section">
                 <div className="section-header">
-                    <img src="../../assets/icon10.png" alt="icon" className="icon" />
+                    <img src={logo34} alt="icon" className="icon" />
                     <span>Giới Thiệu STU</span>
                 </div>
                 <div className="video-container">
