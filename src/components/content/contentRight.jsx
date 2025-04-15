@@ -18,7 +18,7 @@ const ContentRightPage = () => {
         <div className="right-container">
             <div className="section">
                 <div className="section-header">
-                    <img src="../../src/assets/icon3.png" alt="icon" className="icon" />
+                    <img src="../../assets/icon3.png" alt="icon" className="icon" />
                     <span>Liên Kết Thường Dùng</span>
                 </div>
                 <ul className="link-list">
@@ -32,7 +32,7 @@ const ContentRightPage = () => {
 
             <div className="section">
                 <div className="section-header">
-                    <img src="../../src/assets/icon10.png" alt="icon" className="icon" />
+                    <img src="../../assets/icon10.png" alt="icon" className="icon" />
                     <span>Giới Thiệu STU</span>
                 </div>
                 <div className="video-container">

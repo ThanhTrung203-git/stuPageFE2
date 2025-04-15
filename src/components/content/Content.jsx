@@ -6,6 +6,7 @@ import logo2 from "../../assets/icon-mortarboard.png"
 import logo3 from "../../assets/icon-career.png"
 import logo4 from "../../assets/sinhvien.png"
 import logo5 from "../../assets/hoc-thi-tuyensinh.png"
+import '../../assets/'
 
 const ContentPage = () => {
   const [news, setNews] = useState([]);
@@ -156,8 +157,8 @@ const ContentPage = () => {
           </div>
         </div>
         <div className="content-columns">
-          {renderCategory("Sinh Viên STU", {logo4}, sinhvien)}
-          {renderCategory("Học - Thi - Tuyển Sinh", {logo5}, hocthi)}
+          {renderCategory("Sinh Viên STU", logo4, sinhvien)}
+          {renderCategory("Học - Thi - Tuyển Sinh", logo5, hocthi)}
         </div>
       </div>
     </>
