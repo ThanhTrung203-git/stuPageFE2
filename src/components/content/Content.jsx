@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import SeeAllButton from "../UI/SeeAllButton";
 import NewsItem from "./newsItem";
 import logo1 from "../../assets/news.png";
+import logo2 from "../../assets/icon-mortarboard.png"
+import logo3 from "../../assets/icon-career.png"
+import logo4 from "../../assets/sinhvien.png"
+import logo5 from "../../assets/hoc-thi-tuyensinh.png"
 
 const ContentPage = () => {
   const [news, setNews] = useState([]);
@@ -100,7 +104,7 @@ const ContentPage = () => {
           {/* Tuyển Sinh */}
           <div className="content-column">
             <div className="content-title">
-              <img src="../../assets/icon-mortarboard.png" alt="icon" />
+              <img src={logo2} alt="icon" />
               <span className="red">Tuyển Sinh STU</span>
             </div>
             {tuyensinh.length > 0 ? (
@@ -127,7 +131,7 @@ const ContentPage = () => {
           {/* Hướng Nghiệp */ }
           <div className="content-column">
             <div className="content-title">
-              <img src="../../assets/icon-career.png" alt="icon" />
+              <img src={logo3} alt="icon" />
               <span className="red">Hướng Nghiệp</span>
             </div>
             {huongnghiep.length > 0 ? (
@@ -152,8 +156,8 @@ const ContentPage = () => {
           </div>
         </div>
         <div className="content-columns">
-          {renderCategory("Sinh Viên STU", "../../assets/sinhvien.png", sinhvien)}
-          {renderCategory("Học - Thi - Tuyển Sinh", "../../assets/hoc-thi-tuyensinh.png", hocthi)}
+          {renderCategory("Sinh Viên STU", {logo4}, sinhvien)}
+          {renderCategory("Học - Thi - Tuyển Sinh", {logo5}, hocthi)}
         </div>
       </div>
     </>
