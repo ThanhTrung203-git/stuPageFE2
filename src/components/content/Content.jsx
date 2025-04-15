@@ -6,7 +6,7 @@ import logo2 from "../../assets/icon-mortarboard.png"
 import logo3 from "../../assets/icon-career.png"
 import logo4 from "../../assets/sinhvien.png"
 import logo5 from "../../assets/hoc-thi-tuyensinh.png"
-import '../../assets/'
+
 
 const ContentPage = () => {
   const [news, setNews] = useState([]);
