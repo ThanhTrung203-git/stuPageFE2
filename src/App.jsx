@@ -42,6 +42,8 @@ import NewsManagement from "./pages/admin/NewsManagement";
 import NewsContentManagement from "./pages/admin/NewsContentManagement";
 import ErrorPage from "./pages/errorPage";
 import NewsPage from "./pages/Tintuc/NewsPage";
+import DetailPage from "./pages/DetailPage";
+
 // ... các import khác
 
 function App() {
@@ -116,6 +118,8 @@ function App() {
                 <Route path="/news" element={<NewsPage />} />
                 <Route path="*" element={<ErrorPage />} />
                 
+
+                <Route path="/bai-viet-:id" element={<DetailPage />} />
               </Routes>
               <Footer />
             </>
