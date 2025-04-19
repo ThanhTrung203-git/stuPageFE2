@@ -24,7 +24,7 @@ import KCngheTpham from "./pages/khoa/KCngheTpham";
 import KDienDtu from "./pages/khoa/KDienDtu";
 import KCoKhi from "./pages/khoa/KCoKhi";
 import KQtriKdoanh from "./pages/khoa/KQtriKdoanh";
-import LienHe from "./pages/LienHe";
+import LienHe from "./pages/Lienhe";
 import DoanThanhNien from "./pages/sinhvien/DoanThanhNien";
 import BieuMau from "./pages/sinhvien/BieuMau";
 import HuongDan from "./pages/sinhvien/HuongDan";
@@ -42,7 +42,8 @@ import NewsManagement from "./pages/admin/NewsManagement";
 import NewsContentManagement from "./pages/admin/NewsContentManagement";
 import ErrorPage from "./pages/errorPage";
 import NewsPage from "./pages/Tintuc/NewsPage";
-import DetailPage from "./pages/DetailPage";
+import NewsList from "./pages/Tintuc/NewsList";
+import NewsDetail from "./pages/Tintuc/NewsDetail";
 
 // ... các import khác
 
@@ -115,11 +116,11 @@ function App() {
                 <Route path="/tap-chi" element={<TapChi />} />
                 {/*Đăng nhập*/}
                 <Route path="/login" element={<LoginForm />} />
-                <Route path="/news" element={<NewsPage />} />
+                <Route path="/news" element={<NewsList />} />
+                <Route path="/news/:id" element={<NewsDetail />} />
+
                 <Route path="*" element={<ErrorPage />} />
                 
-
-                <Route path="/bai-viet-:id" element={<DetailPage />} />
               </Routes>
               <Footer />
             </>
