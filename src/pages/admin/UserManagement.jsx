@@ -26,7 +26,7 @@ const UserManagement = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("https://stupage.onrender.com/admin/users", getAuthHeaders());
+      const res = await axios.get("https://stupage.onrender.com/user", getAuthHeaders());
       const user = res.data.data;
       setUsers(user ? [user] : []);
     } catch (err) {
