@@ -10,7 +10,7 @@ const NewsDetail = () => {
   useEffect(() => {
     const fetchNewsDetail = async () => {
       try {
-        //const response = await fetch(`https://stupage.onrender.com/news/${id}`);
+        const response = await fetch(`https://stupage.onrender.com/news/${id}`);
         const result = await response.json();
 
         if (result.status === 200) {
