@@ -17,13 +17,21 @@ const LoginForm = () => {
         email,
         password,
       });
-
+  
+      console.log("Login response:", res.data); // 👈 Xem response thực tế
+  
       if (res.data.status === 200) {
-        const { token, refreshToken } = res.data.data;
-
-        Cookies.set('token', token, { expires: 1 }); // expires: 1 ngày
-        Cookies.set('refreshToken', refreshToken, { expires: 7 }); // expires: 7 ngày
-
+        const { token, refreshToken, user } = res.data.data || {};
+  
+        Cookies.set('token', token, { expires: 1 });
+        Cookies.set('refreshToken', refreshToken, { expires: 7 });
+  
+        // Kiểm tra nếu có user thì mới lưu
+        if (user) {
+          Cookies.set('user_id', user.id);
+          Cookies.set('category_id', user.category_id);
+        }
+  
         setMessage('Đăng nhập thành công!');
         navigate('/adminpage');
       } else {
@@ -31,9 +39,10 @@ const LoginForm = () => {
       }
     } catch (err) {
       setMessage('Lỗi đăng nhập!');
-      console.error(err);
+      console.error("Đăng nhập thất bại:", err);
     }
   };
+  
 
   return (
     <div className="login-container">
