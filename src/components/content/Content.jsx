@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SeeAllButton from "../UI/SeeAllButton";
 import NewsItem from "./newsItem";
-import logo1 from "../../assets/news.png";
-import logo2 from "../../assets/icon-mortarboard.png"
-import logo3 from "../../assets/icon-career.png"
-import logo4 from "../../assets/sinhvien.png"
-import logo5 from "../../assets/hoc-thi-tuyensinh.png"
-
 
 const ContentPage = () => {
   const [news, setNews] = useState([]);
@@ -54,16 +48,16 @@ const ContentPage = () => {
         <>
           <img src={data[0].image_title} alt={data[0].title} className="main-image" />
           <div className="main-article">
-            <a href={`/bai-viet-${data[0].id}`}>{data[0].title}</a>
+            <a href={`/news/${data[0].id}`}>{data[0].title}</a>
             <p>{new Date(data[0].created_at).toLocaleDateString()}</p>
-            <a href={`/bai-viet-${data[0].id}`} className="detail-link">
+            <a href={`/news/${data[0].id}`} className="detail-link">
               Chi tiết ►
             </a>
           </div>
           <ul className="sub-articles">
             {data.slice(1, 3).map((item) => (
               <li key={item.id}>
-                <a href={`/bai-viet-${item.id}`}>{item.title}</a>
+                <a href={`/news/${item.id}`}>{item.title}</a>
               </li>
             ))}
           </ul>
@@ -82,7 +76,7 @@ const ContentPage = () => {
       {/* Tin tức chính */}
       <div className="news-container">
         <div className="news-header">
-          <img src={logo1} alt="news-icon" className="news-icon" />
+          <img src="../../src/assets/news.png" alt="news-icon" className="news-icon" />
           <span className="news-title read-more">Tin Tức STU</span>
         </div>
         {news.length === 0 ? (
@@ -105,7 +99,7 @@ const ContentPage = () => {
           {/* Tuyển Sinh */}
           <div className="content-column">
             <div className="content-title">
-              <img src={logo2} alt="icon" />
+              <img src="../../src/assets/icon-mortarboard.png" alt="icon" />
               <span className="red">Tuyển Sinh STU</span>
             </div>
             {tuyensinh.length > 0 ? (
@@ -113,9 +107,9 @@ const ContentPage = () => {
                 <img src={tuyensinh[0].image_title}
         alt={tuyensinh[0].title} className="main-image" />
                 <div className="main-article">
-                  <a href={`/bai-viet-${tuyensinh[0].id}`}>{tuyensinh[0].title}</a>
+                  <a href={`/news/${tuyensinh[0].id}`}>{tuyensinh[0].title}</a>
                   <p>{new Date(tuyensinh[0].created_at).toLocaleDateString()}</p>
-                  <a href={`/bai-viet-${tuyensinh[0].id}`} className="detail-link">Chi tiết ►</a>
+                  <a href={`/news/${tuyensinh[0].id}`} className="detail-link">Chi tiết ►</a>
                 </div>
                 <ul className="sub-articles">
                   {tuyensinh.slice(1, 3).map(item => (
@@ -132,7 +126,7 @@ const ContentPage = () => {
           {/* Hướng Nghiệp */ }
           <div className="content-column">
             <div className="content-title">
-              <img src={logo3} alt="icon" />
+              <img src="../../src/assets/icon-career.png" alt="icon" />
               <span className="red">Hướng Nghiệp</span>
             </div>
             {huongnghiep.length > 0 ? (
@@ -140,9 +134,9 @@ const ContentPage = () => {
                 <img src={huongnghiep[0].image_title}
         alt={huongnghiep[0].title} className="main-image" />
                 <div className="main-article">
-                  <a href={`/bai-viet-${huongnghiep[0].id}`}>{huongnghiep[0].title}</a>
+                  <a href={`/news/${huongnghiep[0].id}`}>{huongnghiep[0].title}</a>
                   <p>{new Date(huongnghiep[0].created_at).toLocaleDateString()}</p>
-                  <a href={`/bai-viet-${huongnghiep[0].id}`} className="detail-link">Chi tiết ►</a>
+                  <a href={`/news/${huongnghiep[0].id}`} className="detail-link">Chi tiết ►</a>
                 </div>
                 <ul className="sub-articles">
                   {huongnghiep.slice(1, 3).map(item => (
@@ -157,8 +151,8 @@ const ContentPage = () => {
           </div>
         </div>
         <div className="content-columns">
-          {renderCategory("Sinh Viên STU", logo4, sinhvien)}
-          {renderCategory("Học - Thi - Tuyển Sinh", logo5, hocthi)}
+          {renderCategory("Sinh Viên STU", "../../src/assets/sinhvien.png", sinhvien)}
+          {renderCategory("Học - Thi - Tuyển Sinh", "../../src/assets/hoc-thi-tuyensinh.png", hocthi)}
         </div>
       </div>
     </>
