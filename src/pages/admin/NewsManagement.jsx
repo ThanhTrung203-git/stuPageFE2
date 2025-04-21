@@ -146,8 +146,8 @@ const NewsManagement = () => {
   };
   
   const handleDelete = async (id, category_id) => {
-    const userCategoryId = Cookies.get("category_id");
-    if (category_id !== Number(userCategoryId)) {
+    const userCategoryId = Number(Cookies.get("category_id")); // ép kiểu rõ ràng
+    if (Number(category_id) !== userCategoryId) {
       alert("Bạn không có quyền xóa bài viết này.");
       return;
     }
@@ -161,6 +161,7 @@ const NewsManagement = () => {
       console.error("Lỗi khi xóa bài viết:", err);
     }
   };
+  
   
 
   const handleAddContent = (newsId) => {
@@ -250,7 +251,7 @@ const NewsManagement = () => {
               <td>{users.find((u) => u.id === news.user_id)?.username || "Không rõ"}</td>
               <td>
                 <button onClick={() => handleEdit(news)}>Sửa</button>
-                <button onClick={() => handleDelete(news.id)}>Xoá</button>
+                <button onClick={() => handleDelete(news.id, news.category_id)}>Xoá</button>
                 <button onClick={() => handleAddContent(news.id)}>Thêm nội dung</button>
               </td>
             </tr>
