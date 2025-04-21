@@ -46,6 +46,8 @@
   }
   
   .news-image {
+    width: 150px;
+    height: 100px;
     object-fit: cover;
     border: 1px solid #ccc;
   }

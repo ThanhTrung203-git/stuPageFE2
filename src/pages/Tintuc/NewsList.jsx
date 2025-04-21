@@ -14,7 +14,10 @@ const NewsList = () => {
         const result = await response.json();
 
         if (result.status === 200) {
-          setNewsList(result.data);
+          const sortedData = result.data.sort(
+            (a, b) => new Date(b.created_at) - new Date(a.created_at)
+          );
+          setNewsList(sortedData);
         } else {
           console.error("Lỗi khi tải danh sách bài viết.");
         }

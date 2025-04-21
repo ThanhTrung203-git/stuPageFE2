@@ -15,7 +15,10 @@ const KDienDtu = () => {
   
         if (result.status === 200) {
           const filteredNews = result.data.filter((news) => news.category_id === 22);
-          setNewsList(filteredNews);
+          const sortedData = filteredNews.sort(
+            (a, b) => new Date(b.created_at) - new Date(a.created_at)
+          );
+          setNewsList(sortedData);
         } else {
           console.error("Lỗi khi tải danh sách bài viết.");
         }
