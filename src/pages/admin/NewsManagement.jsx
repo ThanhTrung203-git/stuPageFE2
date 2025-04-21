@@ -13,6 +13,11 @@ const NewsManagement = () => {
   const [image, setImage] = useState(null);
   const [selectedNewsIdForContent, setSelectedNewsIdForContent] = useState(null);
 
+  const currentUser = {
+    id: Cookies.get("user_id"),
+    category_id: Cookies.get("category_id"),
+  };
+
   const [formData, setFormData] = useState({
     title: "",
     category_id: "",
@@ -188,13 +193,26 @@ const NewsManagement = () => {
             onChange={handleChange}
             required
           />
-          <select name="category_id" value={formData.category_id} onChange={handleChange} required>
+          <select
+            name="category_id"
+            value={formData.category_id}
+            onChange={handleChange}
+            required
+          >
             <option value="">-- Chọn chuyên mục --</option>
-            {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.name}
-              </option>
-            ))}
+            {categories
+              .filter((cat) => {
+                // Nếu có currentUser => chỉ hiển thị đúng chuyên mục
+                if (currentUser && currentUser.category_id) {
+                  return cat.id === Number(currentUser.category_id);
+                }
+                return true; // Hiển thị tất cả nếu không có currentUser
+              })
+              .map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
           </select>
           <select name="user_id" value={formData.user_id} onChange={handleChange} required>
             <option value="">-- Chọn người đăng --</option>
