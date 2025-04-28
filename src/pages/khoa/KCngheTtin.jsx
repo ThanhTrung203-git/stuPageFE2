@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ContentRightPage from "../../components/content/contentRight";
 import '../Tintuc/NewsList.css'
+import icon from "../../src/assets/news.png"
+
 
 const KCngheTtin = () => {
   const [newsList, setNewsList] = useState([]);
@@ -40,7 +42,7 @@ const KCngheTtin = () => {
       <div className="left-column">
         <div className="news-main">
         <div className="news-header">
-          <img src="../../src/assets/news.png" alt="news-icon" className="news-icon" />
+          <img src={icon} alt="news-icon" className="news-icon" />
           <span className="news-title read-more">Tin Tức STU</span>
         </div>
           {newsList.map((news) => {
