@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import SeeAllButton from "../UI/SeeAllButton";
 import NewsItem from "./newsItem";
+import icon1 from "../../assets/news.png"
+import icon2 from "../../assets/icon-mortarboard.png"
+import icon3 from "../../assets/icon-career.png"
+import icon4 from "../../assets/sinhvien.png"
+import icon5 from "../../assets/hoc-thi-tuyensinh.png"
 
 const ContentPage = () => {
   const [news, setNews] = useState([]);
@@ -76,7 +81,7 @@ const ContentPage = () => {
       {/* Tin tức chính */}
       <div className="news-container">
         <div className="news-header">
-          <img src="../../src/assets/news.png" alt="news-icon" className="news-icon" />
+          <img src={icon1} alt="news-icon" className="news-icon" />
           <span className="news-title read-more">Tin Tức STU</span>
         </div>
         {news.length === 0 ? (
@@ -99,7 +104,7 @@ const ContentPage = () => {
           {/* Tuyển Sinh */}
           <div className="content-column">
             <div className="content-title">
-              <img src="../../src/assets/icon-mortarboard.png" alt="icon" />
+              <img src={icon2} alt="icon" />
               <span className="red">Tuyển Sinh STU</span>
             </div>
             {tuyensinh.length > 0 ? (
@@ -126,7 +131,7 @@ const ContentPage = () => {
           {/* Hướng Nghiệp */ }
           <div className="content-column">
             <div className="content-title">
-              <img src="../../src/assets/icon-career.png" alt="icon" />
+              <img src={icon3} alt="icon" />
               <span className="red">Hướng Nghiệp</span>
             </div>
             {huongnghiep.length > 0 ? (
@@ -151,8 +156,8 @@ const ContentPage = () => {
           </div>
         </div>
         <div className="content-columns">
-          {renderCategory("Sinh Viên STU", "../../src/assets/sinhvien.png", sinhvien)}
-          {renderCategory("Học - Thi - Tuyển Sinh", "../../src/assets/hoc-thi-tuyensinh.png", hocthi)}
+          {renderCategory("Sinh Viên STU", icon4, sinhvien)}
+          {renderCategory("Học - Thi - Tuyển Sinh", icon5, hocthi)}
         </div>
       </div>
     </>
