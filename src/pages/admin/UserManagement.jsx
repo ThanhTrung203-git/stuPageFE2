@@ -5,18 +5,22 @@ import "./UserManagement.css";
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
-  const [formData, setFormData] = useState({ username: "", email: "", password: "" });
+  const [categories, setCategories] = useState([]);
+  const [formData, setFormData] = useState({ username: "", email: "", password: "", category_id: "" });
   const [editingId, setEditingId] = useState(null);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
+  const userCategoryId = Cookies.get("category_id"); // lấy category_id 1 lần luôn cho nhẹ
+
   useEffect(() => {
     fetchUsers();
+    fetchCategories();
   }, []);
 
   const getAuthHeaders = () => {
-    const token = Cookies.get("token"); 
+    const token = Cookies.get("token");
     return {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -27,11 +31,31 @@ const UserManagement = () => {
   const fetchUsers = async () => {
     try {
       const res = await axios.get("https://stupage.onrender.com/user", getAuthHeaders());
-      const user = res.data.data;
-      setUsers(user ? [user] : []);
+      const currentUser = res.data.data;
+
+      if (!currentUser) {
+        setUsers([]);
+        return;
+      }
+
+      if (userCategoryId === "null") {
+        const allUsersRes = await axios.get("https://stupage.onrender.com/user/getall", getAuthHeaders());
+        setUsers(allUsersRes.data.data || []);
+      } else {
+        setUsers([currentUser]);
+      }
     } catch (err) {
       console.error("Lỗi khi lấy danh sách người dùng:", err);
       setUsers([]);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const res = await axios.get("https://stupage.onrender.com/categories");
+      setCategories(res.data.data || []);
+    } catch (err) {
+      console.error("Lỗi khi lấy danh sách category:", err);
     }
   };
 
@@ -40,7 +64,7 @@ const UserManagement = () => {
   };
 
   const handleClear = () => {
-    setFormData({ username: "", email: "", password: "" });
+    setFormData({ username: "", email: "", password: "", category_id: "" });
     setEditingId(null);
   };
 
@@ -48,10 +72,9 @@ const UserManagement = () => {
     e.preventDefault();
     try {
       if (editingId) {
-        console.log(">>>check ")
-        await axios.put("https://stupage.onrender.com/user/updateUser", formData, getAuthHeaders());
+        await axios.put(`https://stupage.onrender.com/admin/users/${editingId}`, { id: editingId, ...formData }, getAuthHeaders());
       } else {
-        await axios.post("https://stupage.onrender.com/user/register", formData);
+        await axios.post("https://stupage.onrender.com/admin/users", formData);
       }
       handleClear();
       fetchUsers();
@@ -61,11 +84,15 @@ const UserManagement = () => {
   };
 
   const handleEdit = (user) => {
-    setFormData({ username: user.username, email: user.email, password: "" });
+    setFormData({
+      username: user.username,
+      email: user.email,
+      password: "",
+      category_id: user.category_id ? user.category_id : "",
+    });
     setEditingId(user.id);
   };
 
-  // Pagination logic
   const totalPages = Math.ceil(users.length / itemsPerPage);
   const indexOfLast = currentPage * itemsPerPage;
   const indexOfFirst = indexOfLast - itemsPerPage;
@@ -83,36 +110,47 @@ const UserManagement = () => {
         Quản lý Người dùng
       </h2>
 
-      <div className="admin-form_container">
-        <form onSubmit={handleSubmit} className="admin-form">
-          <input
-            type="text"
-            name="username"
-            placeholder="Tên người dùng"
-            value={formData.username}
-            onChange={handleChange}
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email người dùng"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          <button type="submit">{editingId ? "Cập nhật" : "Thêm mới"}</button>
-        </form>
+      {/* Chỉ hiện Form khi là admin tổng */}
+      {userCategoryId === "null" && (
+        <div className="admin-form_container">
+          <form onSubmit={handleSubmit} className="admin-form">
+            <input
+              type="text"
+              name="username"
+              placeholder="Tên người dùng"
+              value={formData.username}
+              onChange={handleChange}
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email người dùng"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+            <select name="category_id" value={formData.category_id} onChange={handleChange}>
+              <option value="">-- Chọn danh mục --</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+            <button type="submit">{editingId ? "Cập nhật" : "Thêm mới"}</button>
+          </form>
 
-        <button className="btn_refresh" type="button" onClick={handleClear}>
-          Nhập lại
-        </button>
-      </div>
+          <button className="btn_refresh" type="button" onClick={handleClear}>
+            Nhập lại
+          </button>
+        </div>
+      )}
 
       <table className="admin-table">
         <thead>
@@ -120,24 +158,38 @@ const UserManagement = () => {
             <th>ID</th>
             <th>Tên</th>
             <th>Email</th>
-            <th>Hành động</th>
+            <th>Quyền đăng tin</th>
+            {userCategoryId === "null" && <th>Hành động</th>}
           </tr>
         </thead>
         <tbody>
-          {currentUsers.map((user) => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>{user.username}</td>
-              <td>{user.email}</td>
-              <td>
-                <button onClick={() => handleEdit(user)}>Sửa</button>
-              </td>
-            </tr>
-          ))}
+          {currentUsers.map((user) => {
+            let displayCategory = "";
+            if (userCategoryId === "null") {
+              const userCategory = categories.find((cat) => cat.id === user.category_id);
+              displayCategory = userCategory ? userCategory.name : "Admin";
+            } else {
+              const userCategory = categories.find((cat) => cat.id === Number(userCategoryId));
+              displayCategory = userCategory ? userCategory.name : "";
+            }
+
+            return (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>{user.username}</td>
+                <td>{user.email}</td>
+                <td>{displayCategory}</td>
+                {userCategoryId === "null" && (
+                  <td>
+                    <button onClick={() => handleEdit(user)}>Sửa</button>
+                  </td>
+                )}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
 
-      {/* Pagination controls */}
       <div className="pagination">
         <button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1}>
           &lt;

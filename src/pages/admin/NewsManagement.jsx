@@ -3,8 +3,7 @@ import axios from "../../axiosInstance";
 import Cookies from "js-cookie";
 import NewsContentForm from "./NewsContentForm";
 import "./UserManagement.css";
-const userId = Cookies.get("user_id");
-const categoryId = Cookies.get("category_id");
+
 
 const NewsManagement = () => {
   const [newsList, setNewsList] = useState([]);
@@ -13,10 +12,6 @@ const NewsManagement = () => {
   const [image, setImage] = useState(null);
   const [selectedNewsIdForContent, setSelectedNewsIdForContent] = useState(null);
 
-  const currentUser = {
-    id: Cookies.get("user_id"),
-    category_id: Cookies.get("category_id"),
-  };
 
   const [formData, setFormData] = useState({
     title: "",
@@ -65,14 +60,25 @@ const NewsManagement = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("https://stupage.onrender.com/user/getall", getAuthHeaders());
-      const userData = res.data.data;
-      setUsers(Array.isArray(userData) ? userData : userData ? [userData] : []);
+      const userCategoryId = Cookies.get("category_id");
+  
+      if (userCategoryId === "null") {
+        // Admin tổng: lấy tất cả user
+        const res = await axios.get("https://stupage.onrender.com/user/getall", getAuthHeaders());
+        const userData = res.data.data;
+        setUsers(Array.isArray(userData) ? userData : userData ? [userData] : []);
+      } else {
+        // User thường: chỉ lấy thông tin của chính họ
+        const res = await axios.get(`https://stupage.onrender.com/user`, getAuthHeaders());
+        const userData = res.data.data;
+        setUsers(userData ? [userData] : []);
+      }
     } catch (err) {
       console.error("Lỗi khi lấy danh sách người dùng:", err);
       setUsers([]);
     }
   };
+  
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -92,8 +98,9 @@ const NewsManagement = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    const userCategoryId = Cookies.get("category_id"); // 👈 Lấy quyền chuyên mục
-    if (formData.category_id !== userCategoryId) {
+    const userCategoryId = Cookies.get("category_id");
+    // Nếu không phải admin tổng => kiểm tra category
+    if (userCategoryId !== "null" && formData.category_id !== userCategoryId) {
       alert("Bạn không có quyền thêm/sửa bài viết thuộc chuyên mục này.");
       return;
     }
@@ -129,10 +136,12 @@ const NewsManagement = () => {
     }
   };
   
+  
 
   const handleEdit = (news) => {
     const userCategoryId = Cookies.get("category_id");
-    if (news.category_id !== Number(userCategoryId)) {
+    // Nếu không phải admin tổng => kiểm tra quyền chuyên mục
+    if (userCategoryId !== "null" && news.category_id !== Number(userCategoryId)) {
       alert("Bạn không có quyền sửa bài viết này.");
       return;
     }
@@ -145,9 +154,11 @@ const NewsManagement = () => {
     setEditingId(news.id);
   };
   
+  
   const handleDelete = async (id, category_id) => {
-    const userCategoryId = Number(Cookies.get("category_id")); // ép kiểu rõ ràng
-    if (Number(category_id) !== userCategoryId) {
+    const userCategoryId = Cookies.get("category_id");
+  
+    if (userCategoryId !== "null" && Number(category_id) !== Number(userCategoryId)) {
       alert("Bạn không có quyền xóa bài viết này.");
       return;
     }
@@ -161,6 +172,7 @@ const NewsManagement = () => {
       console.error("Lỗi khi xóa bài viết:", err);
     }
   };
+  
   
   
 
@@ -203,11 +215,11 @@ const NewsManagement = () => {
             <option value="">-- Chọn chuyên mục --</option>
             {categories
               .filter((cat) => {
-                // Nếu có currentUser => chỉ hiển thị đúng chuyên mục
-                if (currentUser && currentUser.category_id) {
-                  return cat.id === Number(currentUser.category_id);
-                }
-                return true; // Hiển thị tất cả nếu không có currentUser
+                const userCategoryId = Cookies.get("category_id");
+                // Nếu admin tổng => hiện tất cả
+                if (userCategoryId === "null") return true;
+                // Nếu user thường => chỉ hiện 1 chuyên mục
+                return cat.id === Number(userCategoryId);
               })
               .map((cat) => (
                 <option key={cat.id} value={cat.id}>
@@ -215,6 +227,7 @@ const NewsManagement = () => {
                 </option>
               ))}
           </select>
+
           <select name="user_id" value={formData.user_id} onChange={handleChange} required>
             <option value="">-- Chọn người đăng --</option>
             {users.map((user) => (
@@ -290,5 +303,4 @@ const NewsManagement = () => {
     </div>
   );
 };
-
 export default NewsManagement;
