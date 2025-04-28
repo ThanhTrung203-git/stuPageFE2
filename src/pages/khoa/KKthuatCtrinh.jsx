@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ContentRightPage from "../../components/content/contentRight";
 import '../Tintuc/NewsList.css'
-import icon from "../../src/assets/news.png"
+import icon from "../../assets/news.png"
 
 const KKthuatCtrinh = () => {
   const [newsList, setNewsList] = useState([]);
